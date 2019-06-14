@@ -28,16 +28,16 @@ else:
 	print('Too bad >:|\n')
 
 state = raw_input('Please provide abbreviated state symbol where you live eg: CA for California: ')
-desc = raw_input('Please provide a brief description of your procedure you would like to compare to: ')
-desc = desc.split(' ')
-temp = ""
-for i, v in enumerate(desc):
-	if i == len(desc)-1:
-		temp += "'%"+v+"%'"
+input_description = raw_input('Please provide a brief description of your procedure you would like to compare to: ')
+input_description = input_description.split(' ')
+keywords = ""
+for i, v in enumerate(input_description):
+	if i == len(input_description)-1:
+		keywords += "'%"+v+"%'"
 	else:
-		temp += "'%"+v+"%'" + " and hcpcs_description like "
+		keywords += "'%"+v+"%'" + " and hcpcs_description like "
 
-query = 'select distinct HCPCS_CODE, hcpcs_description from medicareMaster where hcpcs_description like ' + temp
+query = 'select distinct HCPCS_CODE, hcpcs_description from medicareMaster where hcpcs_description like ' + keywords
 print('Executing Query: \n', query)
 cur.execute(query)
 print('\nPlease survey the following results: \n')

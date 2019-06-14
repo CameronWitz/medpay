@@ -1,3 +1,107 @@
 Description of files for the Medpay project:
+=============================
+DATA FILES (Loading and txt): 
+
+Medicare_Provider_Util_Payment_PUF_CY2016.txt -- 
+	Master file used to create all of the provider txt files. This data is from 2016, and is aggregated to the type, procedure, and provider columns. 
+
+description_getter.py -- 
+	File used to separate the procedure descriptions from the general data and pull them into a text file. Only distinct descriptions are processed. 
+
+provider_data.txt --
+	Provider data used when we were attempting to normalize the data into our own SQL schema. We kind of abandoned this approach so you don't need this.	
+
+clean_provider.py --
+	Substitutes null value symbol into data inplace of empty values. This helps to prevent some loading errors used in SQL. 
+
+create-load.sql -- 
+	SQL file used to create the tables used and load some preliminary data into them. To see the full list of tables type "show tables" into mysql.
+
+provider_master_processed.txt --
+	Provider data after it has been cleaned by clea_provider.py
+
+descriptions.txt --
+	txt file containing all the unique descriptions in the database. 
+
+hospital_data.txt --
+	File containing hospial data from the Medicare website.
+	
+provider_master.txt --
+	Provider txt file with all of the provider data used for the construction of the current provider master sql table. 
+
+loadHosp.sql --
+	File that loads hospital data into the SQL hospital SQL table. 
+
+full_load.sql --
+	File initially used to load all the data at once. We separated the loading into different files after we had made some changes and did not want to do
+	everything at once. 
+
+loadMedMaster.sql --
+	File that loads the medicaremaster table in the SQL database. 
+=====================     
+NLP FILES:
+
+cos_similarity.py --
+	Script that matches user input to a description in our set of descriptions that has the closest match according to the cosine similarity heuristic. 
+
+gensimOOO.py -- 
+	Script that performs Odd One Out identification (OOO) on a set of input words, eg: a user gives "finger, toe, brick" returns "brick". Note I made up
+	this example and brick is likely not in the actual database.
+           
+new_w2v.py --
+	Tensorflow implementation of Word2Vec, untested and may not run. See word2vec_tf.py if you want to use a Tensorflow model. 
+	
+word2vec_test.py --
+	Numpy based initial approach to Word2Vec encoding. This can be used to understand more clearly the structure of a Word2Vec model, but it is very slow and
+	impractical to use on our dataset. 
+
+descriptionW2V.py -- 
+	Script that creates the Word2Vec model using gensim, and saves the model state. 
+ 
+descriptionW2V.model -- 
+	Saved model built using gensim. We decided to save the model as it was easier to run descriptionW2V.py on our own computers, and load the model
+	on Murphy. 
+
+word2vec_tf.py -- 
+	Another Tensorflow implementation of Word2Vec. This one was actually tested and works
+	
+gensim_exp.py -- 
+	Script that tests the gensim model descriptionW2V.model by using it's similarity function to visualize which words are most similar to user inputted
+	target words. 
+====================
+USE CASES: 
+
+mypy.py --
+	Script that runs through a set prompt of questions to locate providers who offer target procedures at low prices within a desired location. This has
+	a lot of room to be improved, and has yet to integrate some of the nlp techniques we have developed to pinpoint key words that could identify specific
+	procedures. 
+
+mypy2.py -- 
+	Script that runs through a question prompt to pin down providers that match some desired personal criteria. This has not been created with the 
+	intent of using our NLP scripts directly, but can be modified to do so.  
+
+(Also cos_similarity.py, gensim000.py, new_w2v.py, and gensim_exp.py...)
+====================
+MISC FILES:
+                                                                   
+venv --
+	Python 3 virtual environment needed for some files written in python3. Enter the environment with "source venv/bin/activate" and
+	exit with "deactivate". 
+                                                 
+word_counter.py --
+	Simple python script used to count the number of distinct words in the distinct descriptions from descriptions.txt                                        
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
